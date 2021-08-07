@@ -21,14 +21,21 @@ class Toolbar(LabelFrame):
         
         def set_background():
             color = colorchooser.askcolor()[1]
-            if color == None:
-                color = "#ffffff"
+            if not color:
+                color = self.master.DrawingScene.bg_color
             self.master.DrawingScene.set_background(color)
             bg_button['bg'] = color
         
         def reset_drawing():
             self.master.DrawingScene.reset_drawing()
             bg_button['bg'] = "#ffffff"
+        
+        def change_binding(event):
+            if event.widget.get() == 'click':
+                binding = 1
+            else:
+                binding = 0
+            self.master.DrawingScene.set_binding(binding)
 
         color_button = Button(self, text='Choose color', command=choose_color, foreground='#ffffff', background='#000000')
         color_button.pack(pady=10, ipadx=5, ipady=5)
@@ -38,3 +45,8 @@ class Toolbar(LabelFrame):
 
         reset_button = Button(self, text='Reset drawing', command=reset_drawing)
         reset_button.pack(pady=10, ipadx=5, ipady=5)
+
+        tool_box = ttk.Combobox(self, state='readonly', values=('brush', 'click'))
+        tool_box.current(0)
+        tool_box.bind('<<ComboboxSelected>>', change_binding)
+        tool_box.pack(pady=10, ipadx=5, ipady=5)
