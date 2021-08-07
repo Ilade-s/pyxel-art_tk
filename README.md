@@ -1,2 +1,2 @@
 # pyxel-art_tk
-Doing a pixel art/drawing app because I'm broke
+Doing a pixel art/drawing app because why not
